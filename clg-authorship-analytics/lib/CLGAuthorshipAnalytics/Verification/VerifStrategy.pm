@@ -19,6 +19,7 @@ use Carp;
 use Log::Log4perl;
 use CLGTextTools::Commons qw/readParamGroupAsHashFromConfig/;
 use CLGAuthorshipAnalytics::Verification::Basic;
+use CLGAuthorshipAnalytics::Verification::BasicVectors;
 use CLGAuthorshipAnalytics::Verification::Universum;
 use CLGAuthorshipAnalytics::Verification::Impostors;
 
@@ -93,6 +94,8 @@ sub newVerifStrategyFromId {
     }
     if ($strategyId eq "basic") {
 	$res = CLGAuthorshipAnalytics::Verification::Basic->new($strategyParams);
+    } elsif ($strategyId eq "basicVectors") {
+	$res = CLGAuthorshipAnalytics::Verification::BasicVectors->new($strategyParams);
     } elsif ($strategyId eq "univ") {
 	$res = CLGAuthorshipAnalytics::Verification::Universum->new($strategyParams);
     } elsif ($strategyId eq "GI") {

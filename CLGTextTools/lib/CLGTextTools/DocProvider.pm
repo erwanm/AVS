@@ -200,9 +200,11 @@ sub getObservations {
     if (defined($obsType)) {
 		$self->populate($obsType) if (!defined($self->{observs}->{$obsType}));
 		confessLog($self->{logger}, "Error: invalid observation type '$obsType'; no such type found in the collection.") if (!defined($self->{observs}->{$obsType}));
+#		print "getObservations:".Dumper($self->{observs}->{$obsType});
 		return $self->{observs}->{$obsType};
     } else {
 		$self->populate() if (!defined($self->{observs}));
+#		print "getObservations:".Dumper($self->{observs});
 		return $self->{observs} ;
     }
 }
@@ -349,6 +351,11 @@ sub readSourceDoc {
     $self->{obsCollection}->extractObsFromText($self->{filename});
     $self->{obsCollection}->finalize();
     $self->{observs} = $self->{obsCollection}->getObservations($self->{obsTypesList});
+    # DEBUG
+    my ($akey, $ahash) = each(%{$self->{observs}});
+    my ($aword,$avalue) = each(%$ahash);
+    $self->{logger}->trace("readSourceDoc showing just the first value for obs '$aword': ".Dumper($avalue))  if ($self->{logger});
+#    $self->{logger}->trace("readSourceDoc: ".Dumper($self->{observs}))  if ($self->{logger});
     foreach my $obsType (@{$self->{obsTypesList}}) {
 		$self->{nbObsDistinct}->{$obsType} = $self->{obsCollection}->getNbDistinctNGrams($obsType);
 		$self->{nbObsTotal}->{$obsType} = $self->{obsCollection}->getNbTotalNGrams($obsType);

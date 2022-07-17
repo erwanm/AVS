@@ -204,6 +204,7 @@ foreach my $pair (@docsPairs) { # for each case to analyze
 				$docProvider = CLGTextTools::DocProvider->new(\%thisConfig);
 				$allDocs{$doc} = $docProvider if (!$dontLoadAllFiles);
 			}
+			$logger->trace("adding docProvider = ".Dumper($docProvider)) if ($logger);
 			push(@docProvSet, $docProvider);
 			$probeDocsCollection[$probeNo]->addDocProvider($docProvider);
 		}
@@ -220,12 +221,14 @@ foreach my $pair (@docsPairs) { # for each case to analyze
     }
 
     # process case
-    $logger->debug("Computing similarity for case") if ($logger);
+    # DEBUG
+    $logger->trace("FIRST CASE = ".Dumper($casePair[0])) if ($logger);
     if (defined($printScoreDir)) {
 		$targetFileScoresTable = "$printScoreDir/".sprintf("%03d", $caseNo).".scores";
 		$caseNo++;
     }
-
+    $logger->debug("Computing similarity for case") if ($logger);
+ 
 	# my ($doc1, $doc2) = \@casePair;
 	# print Dumper \$doc1;
 

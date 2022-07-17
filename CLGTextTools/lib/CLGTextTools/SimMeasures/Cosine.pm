@@ -45,8 +45,8 @@ sub new {
 #
 #/twdoc
 sub compute {
-	print Dumper \@_;
     my ($self, $doc1, $doc2) = @_;
+    $self->{logger}->trace("compute args Cosine = ".Dumper(\@_));
 
     my ($obs, $freq1, $freq2);
     my $weights = $self->{obsWeights};

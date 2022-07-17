@@ -19,6 +19,7 @@ use CLGTextTools::Logging qw/confessLog cluckLog/;
 use CLGTextTools::Commons qw/readParamGroupAsHashFromConfig/;
 use CLGTextTools::Stats qw/normalizeFreqDoc/;
 use  CLGTextTools::DocProvider;
+use Data::Dumper;
 
 use CLGTextTools::SimMeasures::Cosine;
 use CLGTextTools::SimMeasures::MinMax;
@@ -83,6 +84,10 @@ sub normalizeCompute {
         $normalizedDoc1 = normalizeFreqDoc($doc1->getObservations($obsTypeOrsize1), $doc1->getNbObsTotal($obsTypeOrsize1), $self->{logger});
         $normalizedDoc2 = normalizeFreqDoc($doc2->getObservations($obsTypeOrsize1), $doc2->getNbObsTotal($obsTypeOrsize1), $self->{logger});
     }
+
+    my ($aword,$avalue) = each(%$normalizedDoc1);
+    $self->{logger}->trace("normalizeCompute: showing just the first value for obs '$aword': ".Dumper($avalue))  if ($self->{logger});
+
     $self->compute($normalizedDoc1, $normalizedDoc2);
 }
 
